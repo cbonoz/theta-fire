@@ -23,6 +23,7 @@ for i, c in enumerate(channels):
             'channel_id': "123456"
         }
     data.append(obj)
+    break
 
 
 

@@ -16,9 +16,9 @@ for i, c in enumerate(channels):
             'title': title,
             'description': title,
             'duration': str(60),
-            'thumbUrl': s['game']['thumbnail_url'],
-            'imgUrl': s['game']['logo_url'],
-            'videoUrl': s['video_url_map']['2d']['master'],
+            'thumbURL': s['game']['thumbnail_url'],
+            'imgURL': s['game']['logo_url'],
+            'videoURL': s['video_url_map']['2d']['master'],
             'categories': [s['game']['name']],
             'channel_id': "123456"
         }

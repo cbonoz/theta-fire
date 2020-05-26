@@ -28,5 +28,5 @@ for c in channels:
 
 
 with open('data.json', 'w') as f:
-    f.write(json.dumps(obj))
+    f.write(json.dumps(data))
 

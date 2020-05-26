@@ -729,22 +729,15 @@ public class PlaybackActivity extends Activity implements
         mPlayer.setPlayWhenReady(true);
         mPlayer.seekTo(mCurrentPlaybackPosition);
 
+        final String streamUrl = lastUrl != null ? lastUrl : mSelectedContent.getUrl();
+
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
                 Util.getUserAgent(this, "DeliverySDK"),
                 new DefaultBandwidthMeter(),
-                new ThetaConfig(lastUrl != null ? lastUrl : mSelectedContent.getUrl(), currentUserId),
+                new ThetaConfig(streamUrl, currentUserId),
                 null);
 
-//        String userAgent = Util.getUserAgent(this, "theta-fire");
-//        DataSource.Factory dataSource = new DefaultHttpDataSourceFactory(
-//                userAgent, null,
-//                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
-//                1800000,
-//                true);
-
-
-//        MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSource).createMediaSource(Uri.parse(TEMP_URL)); //mp4
-        MediaSource mediaSource = new HlsMediaSource.Factory(dataSource).createMediaSource(Uri.parse(TEMP_URL)); //hls
+        MediaSource mediaSource = new HlsMediaSource.Factory(dataSource).createMediaSource(Uri.parse(streamUrl)); //hls
         mPlayer.prepare(mediaSource, false, false);
     }
 

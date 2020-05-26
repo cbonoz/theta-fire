@@ -193,6 +193,7 @@ public class PlaybackActivity extends Activity implements
     private boolean mResumeOnStart = false;
 
     private static final String currentUserId = "123"; // Replace with current user url
+    private String lastUrl;
 
     enum AudioFocusState {
         Focused,
@@ -731,7 +732,7 @@ public class PlaybackActivity extends Activity implements
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
                 Util.getUserAgent(this, "DeliverySDK"),
                 new DefaultBandwidthMeter(),
-                new ThetaConfig(TEMP_URL, currentUserId),
+                new ThetaConfig(lastUrl != null ? lastUrl : TEMP_URL, currentUserId),
                 null);
 
 //        String userAgent = Util.getUserAgent(this, "theta-fire");
@@ -1500,8 +1501,8 @@ public class PlaybackActivity extends Activity implements
     private void openContentHelper(Content content) {
 
         if (mPlayer != null && mPlayer.getPlaybackState() == Player.STATE_IDLE) {
-//            String url = content.getUrl();
-            final String url = TEMP_URL;
+            String url = content.getUrl();
+//            final String url = TEMP_URL;
             if (TextUtils.isEmpty(url)) {
                 AnalyticsHelper.trackError(TAG, "Content URL is either null or empty for content " +
                         content.toString());
@@ -1554,6 +1555,7 @@ public class PlaybackActivity extends Activity implements
             }
 
             // Custom setup.
+            lastUrl = url;
             playMedia();
         }
     }

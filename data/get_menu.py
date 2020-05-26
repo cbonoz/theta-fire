@@ -8,11 +8,11 @@ channels = data['body']
 
 data = []
 
-for c in channels:
+for i, c in enumerate(channels):
     s = c['live_stream']
     title = s['title'].encode('ascii', 'ignore').decode('ascii')
     obj = {
-            'id': c['user_id'],
+            'id': str(i + 1),
             'title': title,
             'description': title,
             'duration': str(60),
@@ -20,7 +20,7 @@ for c in channels:
             'imgUrl': s['game']['logo_url'],
             'videoUrl': s['video_url_map']['2d']['master'],
             'categories': [s['game']['name']],
-            'channel_id': c['live_stream_id']
+            'channel_id': "123456"
         }
     data.append(obj)
 

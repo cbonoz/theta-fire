@@ -25,7 +25,7 @@ for i, c in enumerate(channels):
             'channel_id': "13454"
         }
     data.append(obj)
-    if i > 20:
+    if i > 15:
         break
 
 

@@ -68,7 +68,6 @@ import com.amazon.android.model.content.Content;
 import com.amazon.android.module.ModuleManager;
 import com.amazon.android.recipe.Recipe;
 import com.amazon.android.tv.tenfoot.R;
-import com.amazon.android.uamp.DrmProvider;
 import com.amazon.android.uamp.constants.PreferencesConstants;
 import com.amazon.android.uamp.helper.CaptioningHelper;
 import com.amazon.android.uamp.mediaSession.MediaSessionController;
@@ -88,15 +87,12 @@ import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import org.theta.deliverysdk.ThetaDelivery;
 import org.theta.deliverysdk.datasource.ThetaHlsDataSourceFactory;
@@ -196,6 +192,8 @@ public class PlaybackActivity extends Activity implements
      */
     private boolean mResumeOnStart = false;
 
+    private static final String currentUserId = "123"; // Replace with current user url
+
     enum AudioFocusState {
         Focused,
         NoFocusNoDuck,
@@ -220,7 +218,7 @@ public class PlaybackActivity extends Activity implements
 //    private String TEMP_URL = "https://live1-slivertv.akamaized.net/hls/live/2015776/hls_streamer_us_west_0084/usrz4dpidhgz7nwn1fj_360p/chunklist.m3u8";
 
 
-    private static final String TEMP_URL = "https://live3-slivertv.akamaized.net/hls/live/2016031/hls_streamer_us_east_0082/playlist.m3u8";
+    private static final String TEMP_URL = "https://live3-slivertv.akamaized.net/hls/live/2016002/hls_streamer_us_east_0053/playlist.m3u8";
 //    private static final String TEMP_URL = "http://edge-vod-media.cdn01.net/encoded/0000169/0169313/video_1880k/T7J66Z106.mp4?source=firetv&channel_id=13454";
 
 
@@ -733,7 +731,7 @@ public class PlaybackActivity extends Activity implements
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
                 Util.getUserAgent(this, "DeliverySDK"),
                 new DefaultBandwidthMeter(),
-                new ThetaConfig(TEMP_URL, "123"),
+                new ThetaConfig(TEMP_URL, currentUserId),
                 null);
 
 //        String userAgent = Util.getUserAgent(this, "theta-fire");

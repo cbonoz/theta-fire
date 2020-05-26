@@ -10,11 +10,12 @@ data = []
 
 for c in channels:
     s = c['live_stream']
+    title = s['title'].encode('ascii', 'ignore').decode('ascii')
     obj = {
             'id': c['user_id'],
-            'title': s['title'],
-            'description': s['title'],
-            'duration': 60,
+            'title': title,
+            'description': title,
+            'duration': str(60),
             'thumbUrl': s['game']['thumbnail_url'],
             'imgUrl': s['game']['logo_url'],
             'videoUrl': s['video_url_map']['2d']['master'],
@@ -28,5 +29,6 @@ for c in channels:
 
 
 with open('data.json', 'w') as f:
-    f.write(json.dumps(data))
+    s = json.dumps(data)
+    f.write(s)
 

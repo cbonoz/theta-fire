@@ -191,9 +191,14 @@ public class ContentLoader {
                          null)).map(
                 contentContainerAsObject -> {
                     ContentContainer contentContainer = (ContentContainer) contentContainerAsObject;
-
-                    ContentContainer alreadyAvailableContentContainer =
-                            root.findContentContainerByName(contentContainer.getName());
+                    ContentContainer alreadyAvailableContentContainer;
+                    try {
+                         alreadyAvailableContentContainer=
+                                root.findContentContainerByName(contentContainer.getName());
+                    } catch (Exception e) {
+                        Log.e(TAG, "Error parsing container: " + contentContainer, e);
+                        return Observable.empty();
+                    }
 
                     if (alreadyAvailableContentContainer == null) {
                         root.addContentContainer(contentContainer);

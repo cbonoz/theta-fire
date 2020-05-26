@@ -732,7 +732,7 @@ public class PlaybackActivity extends Activity implements
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
                 Util.getUserAgent(this, "DeliverySDK"),
                 new DefaultBandwidthMeter(),
-                new ThetaConfig(lastUrl != null ? lastUrl : TEMP_URL, currentUserId),
+                new ThetaConfig(lastUrl != null ? lastUrl : mSelectedContent.getUrl(), currentUserId),
                 null);
 
 //        String userAgent = Util.getUserAgent(this, "theta-fire");
@@ -1501,7 +1501,8 @@ public class PlaybackActivity extends Activity implements
     private void openContentHelper(Content content) {
 
         if (mPlayer != null && mPlayer.getPlaybackState() == Player.STATE_IDLE) {
-            String url = content.getUrl();
+            final String url = content.getUrl();
+            lastUrl = url;
 //            final String url = TEMP_URL;
             if (TextUtils.isEmpty(url)) {
                 AnalyticsHelper.trackError(TAG, "Content URL is either null or empty for content " +
@@ -1555,7 +1556,6 @@ public class PlaybackActivity extends Activity implements
             }
 
             // Custom setup.
-            lastUrl = url;
             playMedia();
         }
     }

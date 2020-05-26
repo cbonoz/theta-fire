@@ -9,16 +9,5 @@
     "videoURL": "https://live1-slivertv.akamaized.net/hls/live/2015733/hls_streamer_us_west_0031/playlist.m3u8",
     "categories": ["Space"],
     "channel_id": "13454"
-  },
-  {
-    "id": "501",
-    "title": "Crypto with BlockConf",
-    "description": "48 Hours Non-Stop Online Conference",
-    "duration": "60",
-    "thumbURL": "https://orig-video-theta-tv.imgix.net/thumbnail/usrentz0yrbmsk33ks9/1590457770943.jpg",
-    "imgURL": "https://orig-video-theta-tv.imgix.net/thumbnail/usrentz0yrbmsk33ks9/1590457770943.jpg",
-    "videoURL": "https://live3-slivertv.akamaized.net/hls/live/2016031/hls_streamer_us_east_0082/playlist.m3u8",
-    "categories": ["Crypto"],
-    "channel_id": "13454"
-  }
+  
 ]

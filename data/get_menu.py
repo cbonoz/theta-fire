@@ -11,11 +11,11 @@ data = []
 for i, c in enumerate(channels):
     s = c['live_stream']
     title = f"{s['game']['name']} with {c['user']['username']}"
-    description = s['title'].encode('ascii', 'ignore').decode('ascii')
+    description = s['title'].encode('ascii', 'ignore').decode('ascii').replace("\n", '')
 
     obj = {
             'id': str(i + 500),
-            'title': title,
+            'title': title.strip(),
             'description': description,
             'duration': str(60),
             'thumbURL': s['thumbnail_url'],
@@ -25,7 +25,7 @@ for i, c in enumerate(channels):
             'channel_id': "13454"
         }
     data.append(obj)
-    if i > 10:
+    if i > 100:
         break
 
 

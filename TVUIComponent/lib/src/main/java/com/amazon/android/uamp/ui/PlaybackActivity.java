@@ -1830,32 +1830,34 @@ public class PlaybackActivity extends Activity implements
     }
 
     private boolean requestAudioFocus() {
+        return true;
 
-        if (mAudioManager == null) {
-            Log.e(TAG, "mAudionManager is null in requestAudioFocus");
-            return false;
-        }
-        boolean focus = AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
-                mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager
-                        .AUDIOFOCUS_GAIN);
-        if (focus) {
-            mAudioFocusState = AudioFocusState.Focused;
-        }
-        return focus;
+//        if (mAudioManager == null) {
+//            Log.e(TAG, "mAudionManager is null in requestAudioFocus");
+//            return false;
+//        }
+//        boolean focus = AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
+//                mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager
+//                        .AUDIOFOCUS_GAIN);
+//        if (focus) {
+//            mAudioFocusState = AudioFocusState.Focused;
+//        }
+//        return focus;
     }
 
     private boolean abandonAudioFocus() {
+        return true;
 
-        if (mAudioManager == null) {
-            Log.e(TAG, "mAudionManager is null in abandonAudioFocus");
-            return false;
-        }
-        boolean focus = AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager
-                .abandonAudioFocus(this);
-        if (focus) {
-            mAudioFocusState = AudioFocusState.NoFocusNoDuck;
-        }
-        return focus;
+//        if (mAudioManager == null) {
+//            Log.e(TAG, "mAudionManager is null in abandonAudioFocus");
+//            return false;
+//        }
+//        boolean focus = AudioManager.AUDIOFOCUS_REQUEST_GRANTED == mAudioManager
+//                .abandonAudioFocus(this);
+//        if (focus) {
+//            mAudioFocusState = AudioFocusState.NoFocusNoDuck;
+//        }
+//        return focus;
     }
 
     /**

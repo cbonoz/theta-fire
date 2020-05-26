@@ -11,10 +11,14 @@ data = []
 for c in channels:
     s = c['live_stream']
     obj = {
+            'id': c['user_id'],
             'title': s['title'],
-            'categories': [s['game']['thumbnail_url']],
             'description': s['title'],
+            'duration': 60,
+            'thumbUrl': s['game']['thumbnail_url'],
+            'imgUrl': s['game']['logo_url'],
             'videoUrl': s['video_url_map']['2d']['master'],
+            'categories': [s['game']['name']],
             'channel_id': c['live_stream_id']
         }
     data.append(obj)

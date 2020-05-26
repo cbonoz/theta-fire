@@ -1,13 +1,13 @@
 /**
  * This file was modified by Amazon:
  * Copyright 2015-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * A copy of the License is located at
- *
- *     http://aws.amazon.com/apache2.0/
- *
+ * <p>
+ * http://aws.amazon.com/apache2.0/
+ * <p>
  * or in the "license" file accompanying this file. This file is distributed
  * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
  * express or implied. See the License for the specific language governing
@@ -30,60 +30,13 @@
 
 package com.amazon.android.uamp.ui;
 
-import com.google.android.exoplayer.text.CaptionStyleCompat;
-import com.google.android.exoplayer.text.SubtitleLayout;
-
-import com.amazon.ads.IAds;
-import com.amazon.ads.AdMetaData;
-import com.amazon.analytics.AnalyticsTags;
-import com.amazon.android.contentbrowser.ContentBrowser;
-import com.amazon.android.contentbrowser.database.helpers.RecentDatabaseHelper;
-import com.amazon.android.contentbrowser.database.helpers.RecommendationDatabaseHelper;
-import com.amazon.android.contentbrowser.database.records.RecentRecord;
-import com.amazon.android.contentbrowser.helper.AnalyticsHelper;
-import com.amazon.android.model.content.Content;
-import com.amazon.android.module.ModuleManager;
-
-import com.amazon.android.recipe.Recipe;
-import com.amazon.android.tv.tenfoot.R;
-import com.amazon.android.uamp.DrmProvider;
-import com.amazon.android.uamp.UAMP;
-import com.amazon.android.uamp.mediaSession.MediaSessionController;
-import com.amazon.android.uamp.constants.PreferencesConstants;
-import com.amazon.android.uamp.helper.CaptioningHelper;
-import com.amazon.android.ui.fragments.ErrorDialogFragment;
-import com.amazon.android.utils.ErrorUtils;
-import com.amazon.android.utils.Helpers;
-import com.amazon.android.utils.Preferences;
-
-import android.media.MediaDataSource;
-import android.media.session.PlaybackState;
-
-import com.amazon.mediaplayer.AMZNMediaPlayer;
-import com.amazon.mediaplayer.AMZNMediaPlayer.PlayerState;
-import com.amazon.mediaplayer.playback.text.Cue;
-import com.amazon.mediaplayer.tracks.TrackType;
-import com.amazon.utils.DateAndTimeHelper;
-import com.google.android.exoplayer.util.Util;
-import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.DefaultRenderersFactory;
-import com.google.android.exoplayer2.ExoPlayer;
-import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultDataSource;
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
+import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -103,10 +56,52 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import org.theta.deliverysdk.ThetaDelivery;
-import org.theta.deliverysdk.datasource.ThetaHlsDataSourceFactory;
-import org.theta.deliverysdk.models.ThetaConfig;
+import com.amazon.ads.AdMetaData;
+import com.amazon.ads.IAds;
+import com.amazon.analytics.AnalyticsTags;
+import com.amazon.android.contentbrowser.ContentBrowser;
+import com.amazon.android.contentbrowser.database.helpers.RecentDatabaseHelper;
+import com.amazon.android.contentbrowser.database.helpers.RecommendationDatabaseHelper;
+import com.amazon.android.contentbrowser.database.records.RecentRecord;
+import com.amazon.android.contentbrowser.helper.AnalyticsHelper;
+import com.amazon.android.model.content.Content;
+import com.amazon.android.module.ModuleManager;
+import com.amazon.android.recipe.Recipe;
+import com.amazon.android.tv.tenfoot.R;
+import com.amazon.android.uamp.DrmProvider;
+import com.amazon.android.uamp.constants.PreferencesConstants;
+import com.amazon.android.uamp.helper.CaptioningHelper;
+import com.amazon.android.uamp.mediaSession.MediaSessionController;
+import com.amazon.android.ui.fragments.ErrorDialogFragment;
+import com.amazon.android.utils.ErrorUtils;
+import com.amazon.android.utils.Helpers;
+import com.amazon.android.utils.Preferences;
+import com.amazon.mediaplayer.AMZNMediaPlayer;
+import com.amazon.mediaplayer.AMZNMediaPlayer.PlayerState;
+import com.amazon.mediaplayer.playback.text.Cue;
+import com.amazon.utils.DateAndTimeHelper;
+import com.google.android.exoplayer.text.CaptionStyleCompat;
+import com.google.android.exoplayer.text.SubtitleLayout;
+import com.google.android.exoplayer.util.Util;
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
+import com.google.android.exoplayer2.ExoPlayer;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import org.theta.deliverysdk.ThetaDelivery;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -114,6 +109,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -215,7 +214,11 @@ public class PlaybackActivity extends Activity implements
      */
     private IAds mAdsImplementation;
 
-    private String TEMP_URL = "https://live1-slivertv.akamaized.net/hls/live/2015634/hls_streamer_us_west_0044/usr8n78adz8b4aqtdnf_360p/chunklist.m3u8";
+//    private String TEMP_URL = "https://live1-slivertv.akamaized.net/hls/live/2015776/hls_streamer_us_west_0084/usrz4dpidhgz7nwn1fj_360p/chunklist.m3u8";
+
+
+    private static final String TEMP_URL = "https://live2-slivertv.akamaized.net/hls/live/2015844/hls_streamer_europe_0014/playlist.m3u8";
+//    private static final String TEMP_URL = "http://edge-vod-media.cdn01.net/encoded/0000169/0169313/video_1880k/T7J66Z106.mp4?source=firetv&channel_id=13454";
 
 
     /**
@@ -231,6 +234,7 @@ public class PlaybackActivity extends Activity implements
 
         super.onCreate(savedInstanceState);
         ThetaDelivery.INSTANCE.init(this);
+        disableSSL();
 
         //flag for onResume to know this is being called at activity creation
         mResumeOnCreation = true;
@@ -250,12 +254,11 @@ public class PlaybackActivity extends Activity implements
                                     mPlayer.getCurrentPosition());
                         }
                     }
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.e(TAG, "Video position tracking failed.", e);
                 }
                 mVideoPositionTrackingHandler.postDelayed(this,
-                                                          VIDEO_POSITION_TRACKING_POLL_TIME_MS);
+                        VIDEO_POSITION_TRACKING_POLL_TIME_MS);
             }
         };
 
@@ -469,7 +472,7 @@ public class PlaybackActivity extends Activity implements
         }
 
         //Check if onResume called with onStart of activity we need to start the ad flow.
-        if(mResumeOnStart) {
+        if (mResumeOnStart) {
             mResumeOnStart = false;
             openSelectedContent();
         }
@@ -477,8 +480,7 @@ public class PlaybackActivity extends Activity implements
         if (mCaptioningHelper.useGlobalSetting()) {
             mIsClosedCaptionEnabled = mCaptioningHelper.isEnabled();
 
-        }
-        else {
+        } else {
             mIsClosedCaptionEnabled =
                     Preferences.getBoolean(PreferencesConstants.IS_CLOSE_CAPTION_FLAG_PERSISTED);
         }
@@ -498,8 +500,7 @@ public class PlaybackActivity extends Activity implements
                 if (mCurrentPlaybackPosition > 0 && mCurrentPlaybackPosition !=
                         getCurrentPosition()) {
                     mPlayer.seekTo(mCurrentPlaybackPosition);
-                }
-                else {
+                } else {
                     if (mAutoPlay) {
                         play();
                         mAutoPlay = false;
@@ -534,13 +535,12 @@ public class PlaybackActivity extends Activity implements
         if (mResumeOnCreation) {
             mResumeOnCreation = false;
             resumePlayback();
-        }
-        else {
+        } else {
             ContentBrowser.getInstance(this).verifyScreenSwitch(ContentBrowser
-                                                                        .CONTENT_RENDERER_SCREEN,
-                                                                mSelectedContent, extra ->
-                                                                        resumePlayback(),
-                                                                errorExtra -> finish());
+                            .CONTENT_RENDERER_SCREEN,
+                    mSelectedContent, extra ->
+                            resumePlayback(),
+                    errorExtra -> finish());
         }
     }
 
@@ -555,7 +555,7 @@ public class PlaybackActivity extends Activity implements
         // Persist CC state if user has changed local state.
         if (!mCaptioningHelper.useGlobalSetting()) {
             Preferences.setBoolean(PreferencesConstants.IS_CLOSE_CAPTION_FLAG_PERSISTED,
-                                   mIsClosedCaptionEnabled);
+                    mIsClosedCaptionEnabled);
         }
 
         if (mPlayer.getCurrentPosition() > 0) {
@@ -563,14 +563,14 @@ public class PlaybackActivity extends Activity implements
             storeContentPlaybackState();
             // User has stopped watching content so track it with analytics
             AnalyticsHelper.trackPlaybackFinished(mSelectedContent, mStartingPlaybackPosition,
-                                                  getCurrentPosition());
+                    getCurrentPosition());
 
             // After the user has stopped watching the content, send recommendations for related
             // content of the selected content if any exist.
             if (mSelectedContent.getRecommendations().size() > 0) {
                 ContentBrowser.getInstance(this).getRecommendationManager()
-                              .executeRelatedRecommendationsTask(getApplicationContext(),
-                                                                 mSelectedContent);
+                        .executeRelatedRecommendationsTask(getApplicationContext(),
+                                mSelectedContent);
             }
         }
         mIsActivityResumed = false;
@@ -623,7 +623,7 @@ public class PlaybackActivity extends Activity implements
         super.onActivityResult(requestCode, resultCode, data);
 
         ContentBrowser.getInstance(this)
-                      .handleOnActivityResult(this, requestCode, resultCode, data);
+                .handleOnActivityResult(this, requestCode, resultCode, data);
     }
 
     /**
@@ -645,7 +645,7 @@ public class PlaybackActivity extends Activity implements
 
             mPlaybackOverlayFragment.fastForward();
             mTransportControlsUpdateHandler.postDelayed(new ContinualFwdUpdater(),
-                                                        TRANSPORT_CONTROLS_DELAY_PERIOD);
+                    TRANSPORT_CONTROLS_DELAY_PERIOD);
         }
     }
 
@@ -659,7 +659,7 @@ public class PlaybackActivity extends Activity implements
 
             mPlaybackOverlayFragment.fastRewind();
             mTransportControlsUpdateHandler.postDelayed(new ContinualRewindUpdater(),
-                                                        TRANSPORT_CONTROLS_DELAY_PERIOD);
+                    TRANSPORT_CONTROLS_DELAY_PERIOD);
         }
     }
 
@@ -723,18 +723,57 @@ public class PlaybackActivity extends Activity implements
     }
 
     private void playMedia() { // was mPlayer.play
+//        disableSSL();
         mPlayer.setPlayWhenReady(true);
         mPlayer.seekTo(mCurrentPlaybackPosition);
 
+        /*
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
                 Util.getUserAgent(this, "DeliverySDK"),
                 new DefaultBandwidthMeter(),
                 new ThetaConfig(TEMP_URL, "123"),
                 null);
+         */
 
-        MediaSource mediaSource = new HlsMediaSource.Factory(dataSource).createMediaSource(Uri.parse(TEMP_URL));
+        String userAgent = Util.getUserAgent(this, "theta-fire");
 
-        mPlayer.prepare(mediaSource);
+        DataSource.Factory dataSource = new DefaultHttpDataSourceFactory(
+                userAgent, null,
+                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
+                1800000,
+                true);
+
+
+//        MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSource).createMediaSource(Uri.parse(TEMP_URL)); //mp4
+        MediaSource mediaSource = new HlsMediaSource.Factory(dataSource).createMediaSource(Uri.parse(TEMP_URL)); //hls
+        mPlayer.prepare(mediaSource, false, false);
+    }
+
+    private void disableSSL() {
+        //Create a trust manager that does not validate certificate chains
+        TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+            public java.security.cert.X509Certificate[] getAcceptedIssuers()
+            {
+                return null;
+            }
+            public void checkClientTrusted(X509Certificate[] certs, String authType)
+            {
+                //
+            }
+            public void checkServerTrusted(X509Certificate[] certs, String authType)
+            {
+                //
+            }
+        }};
+
+//Install the all-trusting trust manager
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
     }
 
     private void play() {
@@ -742,12 +781,10 @@ public class PlaybackActivity extends Activity implements
         if (mPlayer != null) {
             if (mAudioFocusState == AudioFocusState.Focused) {
                 playMedia();
-            }
-            else {
+            } else {
                 if (requestAudioFocus()) {
                     playMedia();
-                }
-                else {
+                } else {
                     showProgress();
                     mPlaybackState = LeanbackPlaybackState.PLAYING;
                     if (mPlaybackOverlayFragment != null) {
@@ -818,7 +855,7 @@ public class PlaybackActivity extends Activity implements
 
         boolean isPlaying = false;
         if (mPlayer != null) {
-            isPlaying = (mPlayer.getPlaybackState() == ExoPlayer.STATE_BUFFERING);
+            isPlaying = (mPlayer.getPlaybackState() == Player.STATE_BUFFERING);
         }
         return isPlaying;
     }
@@ -857,14 +894,14 @@ public class PlaybackActivity extends Activity implements
 
             // User has stopped watching this content so track it with analytics.
             AnalyticsHelper.trackPlaybackFinished(mSelectedContent, mStartingPlaybackPosition,
-                                                  getCurrentPosition());
+                    getCurrentPosition());
 
             // Since the user is done watching this content, send recommendations for related
             // content of the selected content (if any exist) before changing to the next content.
             if (mSelectedContent.getRecommendations().size() > 0) {
                 ContentBrowser.getInstance(this).getRecommendationManager()
-                              .executeRelatedRecommendationsTask(getApplicationContext(),
-                                                                 mSelectedContent);
+                        .executeRelatedRecommendationsTask(getApplicationContext(),
+                                mSelectedContent);
             }
 
             mIsContentChangeRequested = true;
@@ -893,15 +930,14 @@ public class PlaybackActivity extends Activity implements
             if (database.recordExists(getApplicationContext(), mSelectedContent.getId())) {
 
                 RecentRecord record = database.getRecord(getApplicationContext(),
-                                                         mSelectedContent.getId());
+                        mSelectedContent.getId());
                 // Set the playback position to the stored position if a recent position
                 // exists for this content and playback is not complete.
                 if (record != null && !record.isPlaybackComplete()) {
                     mCurrentPlaybackPosition = record.getPlaybackLocation();
                 }
             }
-        }
-        else {
+        } else {
             Log.e(TAG, "Unable to load content playback state because database is null");
         }
     }
@@ -924,10 +960,10 @@ public class PlaybackActivity extends Activity implements
         // Dismiss the recommendation notification for this content if the content is finished.
         if (isFinished && recommendationDatabaseHelper != null) {
             if (recommendationDatabaseHelper.recordExists(getApplicationContext(),
-                                                          mSelectedContent.getId())) {
+                    mSelectedContent.getId())) {
 
                 ContentBrowser.getInstance(this).getRecommendationManager()
-                              .dismissRecommendation(mSelectedContent.getId());
+                        .dismissRecommendation(mSelectedContent.getId());
                 AnalyticsHelper.trackDismissRecommendationForCompleteContent(mSelectedContent);
             }
         }
@@ -937,11 +973,10 @@ public class PlaybackActivity extends Activity implements
         if (recentDatabaseHelper != null && !isContentLive(mSelectedContent)) {
 
             recentDatabaseHelper.addRecord(getApplicationContext(), mSelectedContent.getId(),
-                                           mPlayer.getCurrentPosition(), isFinished,
-                                           DateAndTimeHelper.getCurrentDate().getTime(),
-                                           mPlayer.getDuration());
-        }
-        else {
+                    mPlayer.getCurrentPosition(), isFinished,
+                    DateAndTimeHelper.getCurrentDate().getTime(),
+                    mPlayer.getDuration());
+        } else {
             Log.e(TAG, "Cannot update recent content playback state. Database is null");
         }
     }
@@ -954,8 +989,7 @@ public class PlaybackActivity extends Activity implements
 
         if (playPause) {
             play();
-        }
-        else {
+        } else {
             pause();
         }
     }
@@ -989,7 +1023,7 @@ public class PlaybackActivity extends Activity implements
 
     private void loadViews() {
 
-        mVideoView = (PlayerView) findViewById(R.id.videoView);
+        mVideoView = findViewById(R.id.videoView);
         // Avoid focus stealing.
         mVideoView.setFocusable(false);
         mVideoView.setFocusableInTouchMode(false);
@@ -1159,8 +1193,7 @@ public class PlaybackActivity extends Activity implements
                     AnalyticsHelper.trackPlaybackControlAction(
                             AnalyticsTags.ACTION_PLAYBACK_CONTROL_PAUSE, mSelectedContent,
                             getCurrentPosition());
-                }
-                else {
+                } else {
                     playbackOverlayFragment.togglePlayback(true);
                     AnalyticsHelper.trackPlaybackControlAction(
                             AnalyticsTags.ACTION_PLAYBACK_CONTROL_PLAY, mSelectedContent,
@@ -1170,18 +1203,16 @@ public class PlaybackActivity extends Activity implements
             case KeyEvent.KEYCODE_MEDIA_FAST_FORWARD:
                 if (mIsLongPress) {
                     stopTransportControlAction();
-                }
-                else {
+                } else {
                     playbackOverlayFragment.fastForward();
                 }
                 AnalyticsHelper.trackPlaybackControlAction(AnalyticsTags.ACTION_PLAYBACK_CONTROL_FF,
-                                                           mSelectedContent, getCurrentPosition());
+                        mSelectedContent, getCurrentPosition());
                 return true;
             case KeyEvent.KEYCODE_MEDIA_REWIND:
                 if (mIsLongPress) {
                     stopTransportControlAction();
-                }
-                else {
+                } else {
                     playbackOverlayFragment.fastRewind();
                 }
                 AnalyticsHelper.trackPlaybackControlAction(
@@ -1191,18 +1222,16 @@ public class PlaybackActivity extends Activity implements
             case KeyEvent.KEYCODE_BUTTON_R1:
                 if (mIsLongPress) {
                     stopTransportControlAction();
-                }
-                else {
+                } else {
                     playbackOverlayFragment.fastForward();
                 }
                 AnalyticsHelper.trackPlaybackControlAction(AnalyticsTags.ACTION_PLAYBACK_CONTROL_FF,
-                                                           mSelectedContent, getCurrentPosition());
+                        mSelectedContent, getCurrentPosition());
                 return true;
             case KeyEvent.KEYCODE_BUTTON_L1:
                 if (mIsLongPress) {
                     stopTransportControlAction();
-                }
-                else {
+                } else {
                     playbackOverlayFragment.fastRewind();
                 }
                 AnalyticsHelper.trackPlaybackControlAction(
@@ -1266,16 +1295,14 @@ public class PlaybackActivity extends Activity implements
             // Get default Ads implementation without creating a new one.
             try {
                 mAdsImplementation = (IAds) ModuleManager.getInstance()
-                                                         .getModule(IAds.class.getSimpleName())
-                                                         .getImpl(false);
+                        .getModule(IAds.class.getSimpleName())
+                        .getImpl(false);
                 playerExtras.putBundle("ads", mAdsImplementation.getExtra());
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.e(TAG, "No Ads interface attached.", e);
             }
 
             // Create a player interface by using the default hooked implementation.
-            String playerInterfaceName = UAMP.class.getSimpleName();
             mPlayer = ExoPlayerFactory.newSimpleInstance(
                     new DefaultRenderersFactory(this),
                     new DefaultTrackSelector(), new DefaultLoadControl());
@@ -1287,6 +1314,7 @@ public class PlaybackActivity extends Activity implements
                 mAdsImplementation.init(this, mAdsView, playerExtras);
             }
 
+            playMedia();
         }
     }
 
@@ -1309,13 +1337,13 @@ public class PlaybackActivity extends Activity implements
         com.google.android.exoplayer.text.Cue aCue;
         for (com.amazon.mediaplayer.playback.text.Cue cue : cues) {
             aCue = new com.google.android.exoplayer.text.Cue(cue.text,
-                                                             cue.textAlignment,
-                                                             cue.line,
-                                                             cue.lineType,
-                                                             cue.lineAnchor,
-                                                             cue.position,
-                                                             cue.positionAnchor,
-                                                             cue.size);
+                    cue.textAlignment,
+                    cue.line,
+                    cue.lineType,
+                    cue.lineAnchor,
+                    cue.position,
+                    cue.positionAnchor,
+                    cue.size);
             convertedCues.add(aCue);
         }
         mSubtitleLayout.setCues(convertedCues);
@@ -1377,13 +1405,13 @@ public class PlaybackActivity extends Activity implements
                 mPlayer.stop();
                 mCurrentPlaybackPosition = getCurrentPosition();
                 AnalyticsHelper.trackPlaybackFinished(mSelectedContent, mStartingPlaybackPosition,
-                                                      mCurrentPlaybackPosition);
+                        mCurrentPlaybackPosition);
                 mStartingPlaybackPosition = mCurrentPlaybackPosition;
             }
 
             hideProgress();
             AnalyticsHelper.trackAdStarted(mSelectedContent, getCurrentPosition(),
-                                           getAdAnalyticsData(extras));
+                    getAdAnalyticsData(extras));
             switchToAdsView();
             disableMediaSession();
         }
@@ -1405,7 +1433,7 @@ public class PlaybackActivity extends Activity implements
             }
 
             AnalyticsHelper.trackAdEnded(mSelectedContent, getCurrentPosition(),
-                                         getAdAnalyticsData(extras));
+                    getAdAnalyticsData(extras));
 
             String adType = null;
             if (extras != null) {
@@ -1424,18 +1452,16 @@ public class PlaybackActivity extends Activity implements
                     }
                     // Resume movie after a mid roll if activity was not stopped else open the
                     // player again with selected content
-                    if (mPlayer != null && mPlayer.getPlaybackState() == ExoPlayer.STATE_READY) {
+                    if (mPlayer != null && mPlayer.getPlaybackState() == Player.STATE_READY) {
                         playMedia();
-                    }
-                    else {
+                    } else {
                         openContentHelper(mSelectedContent);
                     }
                 }
                 // If we came back from a post-roll ad that means the content is finished.
                 else if (adType != null && adType.equals(IAds.POST_ROLL_AD)) {
                     playbackFinished();
-                }
-                else {
+                } else {
                     // Open Movie as pre roll ad pod completed.
                     openContentHelper(mSelectedContent);
                 }
@@ -1475,16 +1501,16 @@ public class PlaybackActivity extends Activity implements
 
     private void openContentHelper(Content content) {
 
-        if (mPlayer != null && mPlayer.getPlaybackState() == ExoPlayer.STATE_IDLE) {
-            String url = content.getUrl();
+        if (mPlayer != null && mPlayer.getPlaybackState() == Player.STATE_IDLE) {
+//            String url = content.getUrl();
+            final String url = TEMP_URL;
             if (TextUtils.isEmpty(url)) {
                 AnalyticsHelper.trackError(TAG, "Content URL is either null or empty for content " +
                         content.toString());
                 return;
             }
 
-            AMZNMediaPlayer.ContentMimeType type = AMZNMediaPlayer.ContentMimeType
-                    .CONTENT_TYPE_UNKNOWN;
+            AMZNMediaPlayer.ContentMimeType type = AMZNMediaPlayer.ContentMimeType.CONTENT_TYPE_UNKNOWN;
             // If the content object contains the video format type, set the ContentMimeType
             // accordingly.
             if (!TextUtils.isEmpty(content.getFormat())) {
@@ -1517,8 +1543,7 @@ public class PlaybackActivity extends Activity implements
                         mHasOutbandCC = true;
                         ccType = AMZNMediaPlayer.TextMimeType.TEXT_WTT;
                         Log.d(TAG, "Close captioning is enabled & its format is TextWTT");
-                    }
-                    else if (ext.equals("xml")) {
+                    } else if (ext.equals("xml")) {
                         mHasOutbandCC = true;
                         ccType = AMZNMediaPlayer.TextMimeType.TEXT_TTML;
                         Log.d(TAG, "Close captioning is enabled & its format is TextTTML");
@@ -1530,35 +1555,8 @@ public class PlaybackActivity extends Activity implements
                 mPlaybackOverlayFragment.updateCurrentContent(mSelectedContent);
             }
 
-            // TODO: refactor out the Amazon media player code to make this activity player
-            // agnostic, Devtech-2634
-            AMZNMediaPlayer.ContentParameters contentParameters =
-                    new AMZNMediaPlayer.ContentParameters(url, type);
-            DrmProvider drmProvider = new DrmProvider(content, this);
-            contentParameters.laurl = drmProvider.fetchLaUrl();
-            contentParameters.encryptionSchema = getAmznMediaEncryptionSchema(drmProvider);
-
-        }
-    }
-
-    /**
-     * Fetches the encryption schema from the resources. If the schema is not available default is
-     * sent.
-     *
-     * @param drmProvider DrmProvider instance
-     * @return encryption schema
-     */
-    private AMZNMediaPlayer.EncryptionSchema getAmznMediaEncryptionSchema(DrmProvider drmProvider) {
-
-        String encryptionSchema = drmProvider.getEncryptionSchema();
-
-        switch (encryptionSchema) {
-            case "ENCRYPTION_PLAYREADY":
-                return AMZNMediaPlayer.EncryptionSchema.ENCRYPTION_PLAYREADY;
-            case "ENCRYPTION_WIDEVINE":
-                return AMZNMediaPlayer.EncryptionSchema.ENCRYPTION_WIDEVINE;
-            default:
-                return AMZNMediaPlayer.EncryptionSchema.ENCRYPTION_DEFAULT;
+            // Custom setup.
+            playMedia();
         }
     }
 
@@ -1623,7 +1621,7 @@ public class PlaybackActivity extends Activity implements
         // If buffering stopped
         if (mPrevState == PlayerState.BUFFERING && mCurrentState != PlayerState.BUFFERING) {
             AnalyticsHelper.trackPlaybackControlAction(AnalyticsTags.ACTION_PLAYBACK_BUFFER_END,
-                                                       mSelectedContent, getCurrentPosition());
+                    mSelectedContent, getCurrentPosition());
         }
         switch (newState) {
             case IDLE:
@@ -1633,7 +1631,7 @@ public class PlaybackActivity extends Activity implements
                 }
                 if (mMediaSessionController != null) {
                     mMediaSessionController.updatePlaybackState(PlaybackState.STATE_NONE,
-                                                                getCurrentPosition());
+                            getCurrentPosition());
                 }
                 break;
             case OPENING:
@@ -1641,8 +1639,7 @@ public class PlaybackActivity extends Activity implements
             case OPENED:
                 if (mPlayer != null && mIsActivityResumed) {
                     playMedia();
-                }
-                else {
+                } else {
                     mIsContentChangeRequested = false;
                 }
                 break;
@@ -1694,14 +1691,14 @@ public class PlaybackActivity extends Activity implements
                     // duration isn't set yet.
                     if (!isContentDurationSetInAds()) {
                         mAdsImplementation.getExtra().putBundle(IAds.VIDEO_EXTRAS,
-                                                                getVideoExtrasBundle
-                                                                        (mSelectedContent));
+                                getVideoExtrasBundle
+                                        (mSelectedContent));
                     }
                     mAdsImplementation.setPlayerState(IAds.PlayerState.PAUSED);
                 }
                 if (mMediaSessionController != null) {
                     mMediaSessionController.updatePlaybackState(PlaybackState.STATE_PAUSED,
-                                                                getCurrentPosition());
+                            getCurrentPosition());
                 }
                 break;
             case PLAYING:
@@ -1726,8 +1723,8 @@ public class PlaybackActivity extends Activity implements
                     // duration isn't set yet.
                     if (!isContentDurationSetInAds()) {
                         mAdsImplementation.getExtra().putBundle(IAds.VIDEO_EXTRAS,
-                                                                getVideoExtrasBundle
-                                                                        (mSelectedContent));
+                                getVideoExtrasBundle
+                                        (mSelectedContent));
                     }
                     mAdsImplementation.setPlayerState(IAds.PlayerState.PLAYING);
                 }
@@ -1741,21 +1738,21 @@ public class PlaybackActivity extends Activity implements
                 }
                 if (mMediaSessionController != null) {
                     mMediaSessionController.updatePlaybackState(PlaybackState.STATE_PLAYING,
-                                                                getCurrentPosition());
+                            getCurrentPosition());
                 }
                 AnalyticsHelper.trackPlaybackStarted(mSelectedContent, getDuration(),
-                                                     mCurrentPlaybackPosition,
-                                                     mTotalSegments, currentSegment);
+                        mCurrentPlaybackPosition,
+                        mTotalSegments, currentSegment);
                 break;
             case BUFFERING:
                 showProgress();
                 if (mMediaSessionController != null) {
                     mMediaSessionController.updatePlaybackState(PlaybackState.STATE_BUFFERING,
-                                                                getCurrentPosition());
+                            getCurrentPosition());
                 }
                 AnalyticsHelper.trackPlaybackControlAction(AnalyticsTags
-                                                                   .ACTION_PLAYBACK_BUFFER_START,
-                                                           mSelectedContent, getCurrentPosition());
+                                .ACTION_PLAYBACK_BUFFER_START,
+                        mSelectedContent, getCurrentPosition());
                 break;
             case SEEKING:
                 showProgress();
@@ -1772,7 +1769,7 @@ public class PlaybackActivity extends Activity implements
                 }
                 if (mMediaSessionController != null) {
                     mMediaSessionController.updatePlaybackState(PlaybackState.STATE_STOPPED,
-                                                                getCurrentPosition());
+                            getCurrentPosition());
                 }
                 break;
             case CLOSING:
@@ -1785,7 +1782,7 @@ public class PlaybackActivity extends Activity implements
                 mWindow.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 if (mMediaSessionController != null) {
                     mMediaSessionController.updatePlaybackState(PlaybackState.STATE_ERROR,
-                                                                getCurrentPosition());
+                            getCurrentPosition());
                 }
                 Log.e(TAG, "Player encountered an error!");
                 break;
@@ -1825,8 +1822,7 @@ public class PlaybackActivity extends Activity implements
             Log.e(TAG, "Media Player error during playback", e.mException);
             mErrorDialogFragment = ErrorDialogFragment.newInstance(this, ErrorUtils
                     .ERROR_CATEGORY.PLAYER_ERROR, this);
-        }
-        else {
+        } else {
             Log.e(TAG, "Network error during playback", e.mException);
             mErrorDialogFragment = ErrorDialogFragment.newInstance(this, ErrorUtils
                     .ERROR_CATEGORY.NETWORK_ERROR, this);

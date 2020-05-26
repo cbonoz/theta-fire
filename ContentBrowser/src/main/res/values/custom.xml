@@ -25,7 +25,7 @@ permissions and limitations under the License.
     <!-- Field in the catalog file which matches with the content id  -->
     <string name="launcher_integration_content_id_key">catalog_content_key</string>
     <!-- Your app name to be displayed by launcher -->
-    <string name="launcher_integration_app_display_name">Fire App Builder</string>
+    <string name="launcher_integration_app_display_name">Theta Fire</string>
     <!--Your package name, should be same as in AndroidManifest-->
     <string name="launcher_integration_intent_package_value">com.fireappbuilder.android.calypso</string>
     <!-- Activity to start on receiving broadcasts from Launcher -->

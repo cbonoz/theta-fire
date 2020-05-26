@@ -15,10 +15,10 @@ permissions and limitations under the License.
 -->
 <resources>
 
-    <string translatable="false" name="app_name">Fire App Builder</string>
+    <string translatable="false" name="app_name">Theta Fire</string>
     <!-- The app's display name that should have a max of 15 characters
          Currently used with recommendations on the Home Screen -->
-    <string translatable="false" name="app_name_short">FireAppBuilder</string>
+    <string translatable="false" name="app_name_short">ThetaFire</string>
 
     <!-- App colors -->
 
@@ -62,14 +62,14 @@ permissions and limitations under the License.
     <!-- Splash Screen Customization -->
 
     <!-- Company logo to show on Splash Screen -->
-    <drawable name="splash_logo">@drawable/fire_app_builder_white</drawable>
+    <drawable name="splash_logo">@drawable/theta_fire</drawable>
 
     <!-- End of Splash Screen Customization -->
 
     <!-- Browse Customization -->
 
     <!-- Company logo -->
-    <drawable name="company_logo">@drawable/fire_app_builder_white_2</drawable>
+    <drawable name="company_logo">@drawable/theta_fire</drawable>
     <!-- App icon -->
     <drawable name="app_logo">@mipmap/ic_launcher</drawable>
     <!-- App banner. Note: Used for Google Play Store -->

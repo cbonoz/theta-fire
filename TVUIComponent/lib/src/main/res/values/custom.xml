@@ -41,7 +41,7 @@ permissions and limitations under the License.
     <!-- Background image for splash screen -->
     <drawable name="splash_background">@color/background</drawable>
     <!-- Company logo to show on Splash Screen -->
-    <drawable name="splash_logo">@drawable/fire_app_builder_white</drawable>
+    <drawable name="splash_logo">@drawable/theta_fire</drawable>
     <!-- Color of splash screen loader -->
     <color name="spinner_color">#FFFFFFFF</color>
     <!-- Alpha of spinner -->

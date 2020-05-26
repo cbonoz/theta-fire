@@ -162,7 +162,7 @@ public class PlaybackActivity extends Activity implements
     private ContinualFwdUpdater mContinualFwdUpdater;
     private ContinualRewindUpdater mContinualRewindUpdater;
     private boolean mIsLongPress;
-    private boolean mAutoPlay = false;
+    private boolean mAutoPlay = true; // was false.
     private boolean mIsNetworkError;
 
     //Media session for adding Alexa media commands capability
@@ -732,7 +732,7 @@ public class PlaybackActivity extends Activity implements
         final String streamUrl = lastUrl != null ? lastUrl : mSelectedContent.getUrl();
 
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
-                Util.getUserAgent(this, "DeliverySDK"),
+                Util.getUserAgent(this, "theta-fire"),
                 new DefaultBandwidthMeter(),
                 new ThetaConfig(streamUrl, currentUserId),
                 null);

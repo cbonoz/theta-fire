@@ -94,10 +94,13 @@ import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import org.theta.deliverysdk.ThetaDelivery;
+import org.theta.deliverysdk.datasource.ThetaHlsDataSourceFactory;
+import org.theta.deliverysdk.models.ThetaConfig;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -217,7 +220,7 @@ public class PlaybackActivity extends Activity implements
 //    private String TEMP_URL = "https://live1-slivertv.akamaized.net/hls/live/2015776/hls_streamer_us_west_0084/usrz4dpidhgz7nwn1fj_360p/chunklist.m3u8";
 
 
-    private static final String TEMP_URL = "https://live2-slivertv.akamaized.net/hls/live/2015844/hls_streamer_europe_0014/playlist.m3u8";
+    private static final String TEMP_URL = "https://live3-slivertv.akamaized.net/hls/live/2016031/hls_streamer_us_east_0082/playlist.m3u8";
 //    private static final String TEMP_URL = "http://edge-vod-media.cdn01.net/encoded/0000169/0169313/video_1880k/T7J66Z106.mp4?source=firetv&channel_id=13454";
 
 
@@ -727,21 +730,18 @@ public class PlaybackActivity extends Activity implements
         mPlayer.setPlayWhenReady(true);
         mPlayer.seekTo(mCurrentPlaybackPosition);
 
-        /*
         DataSource.Factory dataSource = new ThetaHlsDataSourceFactory(this,
                 Util.getUserAgent(this, "DeliverySDK"),
                 new DefaultBandwidthMeter(),
                 new ThetaConfig(TEMP_URL, "123"),
                 null);
-         */
 
-        String userAgent = Util.getUserAgent(this, "theta-fire");
-
-        DataSource.Factory dataSource = new DefaultHttpDataSourceFactory(
-                userAgent, null,
-                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
-                1800000,
-                true);
+//        String userAgent = Util.getUserAgent(this, "theta-fire");
+//        DataSource.Factory dataSource = new DefaultHttpDataSourceFactory(
+//                userAgent, null,
+//                DefaultHttpDataSource.DEFAULT_CONNECT_TIMEOUT_MILLIS,
+//                1800000,
+//                true);
 
 
 //        MediaSource mediaSource = new ExtractorMediaSource.Factory(dataSource).createMediaSource(Uri.parse(TEMP_URL)); //mp4

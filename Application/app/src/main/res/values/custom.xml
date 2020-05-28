@@ -33,7 +33,7 @@ permissions and limitations under the License.
     <!-- Color of the progress bar -->
     <color name="progress_bar">#99FFFFFF</color>
     <!-- Color of splash screen spinning loader animation -->
-    <color name="spinner_color">#FFFFFFFF</color>
+    <color name="spinner_color">#00FFFFFF</color>
     <!-- The color of button highlights and widgets. -->
     <color name="accent">#EE962D</color>
     <!-- FullContentBrowser:

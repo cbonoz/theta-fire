@@ -131,6 +131,9 @@ public class JsonParser implements IParser {
                 Log.e(TAG, "The provided query string is not valid for the given json.", e);
                 throw new InvalidQueryException("The provided query string is not valid for " +
                                                         "the given json: " + query, e);
+            } catch (Exception e) {
+                Log.e(TAG, "Could not read: " + query, e);
+                throw e;
             }
 
         }

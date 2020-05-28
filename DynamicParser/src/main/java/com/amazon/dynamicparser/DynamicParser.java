@@ -371,10 +371,9 @@ public class DynamicParser implements IRecipeCooker {
             catch (Exception e) {
                 subscriber.onError(e);
             }
-
         });
 
-        return dynamicParserObservable;
+        return dynamicParserObservable.onErrorResumeNext(Observable.empty()); // skip bad values.
     }
 
     /**

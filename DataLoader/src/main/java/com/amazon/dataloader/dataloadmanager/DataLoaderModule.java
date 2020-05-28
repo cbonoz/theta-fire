@@ -85,7 +85,12 @@ class DataLoaderModule extends ADataModule implements IRecipeCooker {
                         // Check the subscription status.
                         if (!subscriber.isUnsubscribed()) {
                             // Provide the data.
-                            subscriber.onNext(data.getContent().getPayload());
+                            try {
+                                subscriber.onNext(data.getContent().getPayload());
+                            } catch(Exception e) {
+                                System.out.println(e);
+                            }
+
                             // Call onCompleted after providing the all data.
                             if (data.isComplete()) {
                                 subscriber.onCompleted();

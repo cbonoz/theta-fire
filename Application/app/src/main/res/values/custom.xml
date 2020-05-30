@@ -23,7 +23,8 @@ permissions and limitations under the License.
     <!-- App colors -->
 
     <!-- The background color of the screens. -->
-    <color name="background">#22282E</color>
+<!--    <color name="background">#22282E</color>-->
+    <color name="background">#1b2732</color>
     <!-- Used for card background -->
     <color name="card_background">#2B2B2B</color>
     <!-- Background color of the progress bar -->
@@ -35,7 +36,8 @@ permissions and limitations under the License.
     <!-- Color of splash screen spinning loader animation -->
     <color name="spinner_color">#00FFFFFF</color>
     <!-- The color of button highlights and widgets. -->
-    <color name="accent">#EE962D</color>
+<!--    <color name="accent">#EE962D</color>-->
+    <color name="accent">#7ed0cc</color>
     <!-- FullContentBrowser:
          The header's bar color (left-hand navigation bar). -->
     <color name="browse_headers_bar">#0DFFFFFF</color>

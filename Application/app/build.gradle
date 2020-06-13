@@ -37,13 +37,13 @@ buildscript {
 }
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 29
     buildToolsVersion "25.0.0"
 
     defaultConfig {
         applicationId "com.fireappbuilder.android.calypso"
-        minSdkVersion 23
-        targetSdkVersion 23
+        minSdkVersion 22
+        targetSdkVersion 29
         versionCode 10
         versionName "1.0.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

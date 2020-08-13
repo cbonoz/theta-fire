@@ -100,6 +100,7 @@ import org.theta.deliverysdk.models.ThetaConfig;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +109,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -236,7 +239,6 @@ public class PlaybackActivity extends Activity implements
 
         super.onCreate(savedInstanceState);
         ThetaDelivery.INSTANCE.init(this);
-        disableSSL();
 
         //flag for onResume to know this is being called at activity creation
         mResumeOnCreation = true;
@@ -741,32 +743,6 @@ public class PlaybackActivity extends Activity implements
         mPlayer.prepare(mediaSource, false, false);
     }
 
-    private void disableSSL() {
-        //Create a trust manager that does not validate certificate chains
-        TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
-            public java.security.cert.X509Certificate[] getAcceptedIssuers()
-            {
-                return null;
-            }
-            public void checkClientTrusted(X509Certificate[] certs, String authType)
-            {
-                //
-            }
-            public void checkServerTrusted(X509Certificate[] certs, String authType)
-            {
-                //
-            }
-        }};
-
-//Install the all-trusting trust manager
-        try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        } catch (KeyManagementException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-    }
 
     private void play() {
 
